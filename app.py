@@ -1,8 +1,3 @@
-# To install required packages, run these commands in terminal:
-# pip install opencv-python
-# pip install mediapipe
-# pip install pyautogui
-
 import cv2
 import mediapipe as mp
 import time
@@ -16,12 +11,10 @@ mpDraw = mp.solutions.drawing_utils
 
 pTime = 0
 
-
 def is_finger_vertical_up(lms, tip_id, pip_id):
     tip = lms[tip_id]
     pip = lms[pip_id]
     return tip.y < pip.y and abs(tip.x - pip.x) < 0.03
-
 
 while True:
     success, img = cap.read()
@@ -59,12 +52,11 @@ while True:
     fps = 1 / (cTime - pTime)
     pTime = cTime
 
-    cv2.putText(
-        img, str(int(fps)), (10, 70), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 255), 3
-    )
+    cv2.putText(img, str(int(fps)), (10, 70),
+                cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 255), 3)
 
     cv2.imshow("Image", img)
-    if cv2.waitKey(1) & 0xFF == ord("q"):
+    if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
 cap.release()
