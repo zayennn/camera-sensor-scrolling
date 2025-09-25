@@ -3,7 +3,7 @@ import mediapipe as mp
 import time
 import pyautogui
 
-cap = cv2.VideoCapture(0)  # ganti index sesuai kamera lu
+cap = cv2.VideoCapture(0)
 
 mpHands = mp.solutions.hands
 hands = mpHands.Hands(max_num_hands=2)
@@ -11,7 +11,7 @@ mpDraw = mp.solutions.drawing_utils
 
 pTime = 0
 last_scroll_time = 0
-cooldown = 0.3  # jeda 300ms antar scroll → smooth, fps stabil
+cooldown = 0.3
 
 def is_finger_vertical_up(lms, tip_id, pip_id):
     tip = lms[tip_id]
@@ -28,10 +28,8 @@ while True:
     imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     results = hands.process(imgRGB)
 
-    # Pastikan ada deteksi tangan dan handedness info
     if results.multi_hand_landmarks and results.multi_handedness:
         for i, handLms in enumerate(results.multi_hand_landmarks):
-            # Ambil jenis tangan (Right/Left)
             handType = results.multi_handedness[i].classification[0].label
 
             if handType == "Right":
@@ -56,7 +54,6 @@ while True:
             else:
                 print("Tangan kiri terdeteksi - abaikan")
 
-    # FPS calc
     cTime = time.time()
     fps = 1 / (cTime - pTime) if cTime != pTime else 0
     pTime = cTime
